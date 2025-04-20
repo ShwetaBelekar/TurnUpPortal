@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,21 @@ namespace TurnUpPortal.Pages
             driver.Manage().Window.Maximize();
             Thread.Sleep(1000);
 
+            try
+            {
+                IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
+                usernameTextbox.SendKeys("hari");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Username textbox not located.");
+            }
+
             //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5)); //Explicit wait
             //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("UserName")));
 
             //Identify username textbox and enter valid user name
-            IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
-            usernameTextbox.SendKeys("hari");
+         
 
             Wait.WaitToBeVisible(driver, "Id", "Password", 7);
 
