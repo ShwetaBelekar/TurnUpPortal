@@ -16,7 +16,8 @@ namespace TurnUpPortal.Pages
             try
             {
                 IWebElement createNewButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
-                createNewButton.Click();
+                createNewButton.Click(); 
+
             }
             catch (Exception ex)
             {

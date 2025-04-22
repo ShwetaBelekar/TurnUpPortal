@@ -19,6 +19,7 @@ namespace TurnUpPortal.Tests
         {
             driver = new ChromeDriver();
             ChromeOptions options = new ChromeOptions();
+            //options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
             options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
             driver = new ChromeDriver(options);
             //Implicit Wait
