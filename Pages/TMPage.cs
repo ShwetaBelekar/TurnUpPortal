@@ -43,7 +43,8 @@ namespace TurnUpPortal.Pages
             priceTagOverlap.Click();
 
             IWebElement priceTextbox = driver.FindElement(By.Id("Price"));
-            priceTextbox.SendKeys("20");
+            priceTextbox.SendKeys("$20.00");
+            Thread.Sleep(5000);
 
             Wait.WaitToBeClickable(driver, "Id", "SaveButton", 3);
 
@@ -53,25 +54,27 @@ namespace TurnUpPortal.Pages
 
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             goToLastPageButton.Click();
-
-
-
-            IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-
-            Assert.That(newCode.Text == "ABC", "New time record has not been created!");
-
-            //if (newCode.Text == "ABC")
-            //{
-            //    Assert.Pass("Time record created successfully!");
-            //}
-            //else
-            //{
-            //    Assert.Fail("New time record has not been created!");
-            //}
+            Thread.Sleep(5000);
+            
 
         }
+        public string GetCode(IWebDriver driver)
+        {
+            IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return newCode.Text;
+        }
+        public string GetDescription(IWebDriver driver)
+        {
+            IWebElement newDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+            return newDescription.Text;
+        }
+        public string GetPrice(IWebDriver driver)
+        {
+            IWebElement newPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+            return newPrice.Text;
+        }
 
-        public void EditTimeRecord(IWebDriver driver)
+        public void EditTimeRecord(IWebDriver driver, string code)
         {
             
             Thread.Sleep(4000);
@@ -80,12 +83,12 @@ namespace TurnUpPortal.Pages
             lastPageButton.Click(); 
             Thread.Sleep(2000);
 
-            IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[3]/td[5]/a[1]"));
+            IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
             editButton.Click(); 
 
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
             descriptionTextbox.Clear();
-            descriptionTextbox.SendKeys("cbaDescription");
+            descriptionTextbox.SendKeys(code);
 
             /*IWebElement global_typeCodeDropdown = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[2]/span"));
             global_typeCodeDropdown.Click();*/
@@ -111,17 +114,20 @@ namespace TurnUpPortal.Pages
             llastPageButton.Click();
             Thread.Sleep(1500);
 
-            IWebElement editedDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[3]/td[3]")); 
-
-            if (editedDescription.Text == "cbaDescription")
-            {
-                Assert.Pass("Description edited successfully!");
-            }
-            else
-            {
-                Assert.Fail("Description has not been edited");
-            }
-            Thread.Sleep(1500);
+            //if (editedDescription.Text == "cbaDescription")
+            //{
+            //    Assert.Pass("Description edited successfully!");
+            //}
+            //else
+            //{
+            //    Assert.Fail("Description has not been edited");
+            //}
+            //Thread.Sleep(1500);
+        }
+        public string GetEditedDescription(IWebDriver driver)
+        {
+            IWebElement editedDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+            return editedDescription.Text;
         }
         public void DeleteTimeRecord(IWebDriver driver)
         {
