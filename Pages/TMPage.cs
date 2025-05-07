@@ -74,7 +74,7 @@ namespace TurnUpPortal.Pages
             return newPrice.Text;
         }
 
-        public void EditTimeRecord(IWebDriver driver, string code)
+        public void EditTimeRecord(IWebDriver driver, string code, string description)
         {
             
             Thread.Sleep(4000);
@@ -84,11 +84,16 @@ namespace TurnUpPortal.Pages
             Thread.Sleep(2000);
 
             IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
-            editButton.Click(); 
+            editButton.Click();
+
+            IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
+            codeTextbox.Clear();
+            Thread.Sleep(2000);
+            codeTextbox.SendKeys(code);
 
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
             descriptionTextbox.Clear();
-            descriptionTextbox.SendKeys(code);
+            descriptionTextbox.SendKeys(description);
 
             /*IWebElement global_typeCodeDropdown = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[2]/span"));
             global_typeCodeDropdown.Click();*/
@@ -123,6 +128,11 @@ namespace TurnUpPortal.Pages
             //    Assert.Fail("Description has not been edited");
             //}
             //Thread.Sleep(1500);
+        }
+        public string GetEditedCode(IWebDriver driver)
+        {
+            IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return editedCode.Text;
         }
         public string GetEditedDescription(IWebDriver driver)
         {

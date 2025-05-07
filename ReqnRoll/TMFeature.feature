@@ -5,7 +5,7 @@ So that I can manage employees time and materials successfully
 
 
 @regression
-Scenario: create time record 
+Scenario: create time record with valid data
 	Given I logged into Turnup portal successfully
 	When I navigate to Time and Material page
 	When I create a time record
@@ -14,11 +14,11 @@ Scenario: create time record
 Scenario Outline: edit existing time record with valid data
  Given I logged into Turnup portal successfully
  When I navigate to Time and Material page
- When I update the '<Code>' on an existing Time record
- Then the record should have the updated '<Code>'
+ When I update the '<Code>' and '<Description>' on an existing Time record
+ Then the record should have the updated '<Code>' and '<Description>'
 
  Examples: 
- | Code     |
- | Indutry Connect |
- | TA Job Ready    |
- | EditedRecord    |
+ | Code            | Description |
+ | Indutry Connect | Laptop      |
+ | TA Job Ready    | Mouse       |
+ | EditedRecord    | Keyboard    |
